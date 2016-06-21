@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/pano_image_upper"
+        android:layout_width="81.0dip"
+        android:layout_height="74.0dip"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:background="@drawable/wsdk_pano_image_background">
+
+        <ImageView
+            android:id="@+id/panoImageView"
+            android:layout_width="fill_parent"
+            android:layout_height="57.0dip"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="3.0dip"
+            android:layout_marginRight="3.0dip"
+            android:layout_marginTop="3.0dip"
+            android:scaleType="fitXY" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/panoImageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="2.0dip"
+            android:layout_marginTop="0.0dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="查看全景"
+                android:textColor="#ffffffff"
+                android:textSize="9.0dip" />
+
+            <ImageView
+                android:layout_width="5.0dip"
+                android:layout_height="9.0dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5.0dip"
+                android:src="@drawable/wsdk_checkout_pano_arrow" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/wsdk_pano_image_background_tip" />
+</LinearLayout>

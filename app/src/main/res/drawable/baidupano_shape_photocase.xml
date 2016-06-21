@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 默认灰色边框 -->
+    <item android:state_focused="false" android:state_pressed="false">
+        <shape>
+            <solid android:color="@android:color/transparent" />
+
+            <stroke android:width="1px" android:color="#FF4E596A" />
+        </shape>
+    </item>
+    <!-- 按下蓝色边框 -->
+
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="@android:color/transparent" />
+
+            <stroke android:width="1px" android:color="#FF3385FF" />
+        </shape>
+    </item>
+
+</selector>

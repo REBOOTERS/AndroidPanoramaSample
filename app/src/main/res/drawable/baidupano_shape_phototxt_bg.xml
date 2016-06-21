@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 内景图片文字渐变背景 -->
+    <gradient
+        android:angle="90"
+        android:endColor="@android:color/transparent"
+        android:startColor="#FF282C36" />
+
+</shape>

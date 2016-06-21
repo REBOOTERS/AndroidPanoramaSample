@@ -1,0 +1,56 @@
+<com.baidu.lbsapi.panodemo.indoor.view.SinglePhotoLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#2E3542">
+
+        <com.baidu.lbsapi.panodemo.indoor.view.AsyncImageView
+            android:id="@+id/asyncImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:adjustViewBounds="false"
+            android:scaleType="center"
+            android:src="@drawable/baidupano_photo_default" />
+
+        <ImageView
+            android:id="@+id/mask_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="#C0141932"
+            android:scaleType="center"
+            android:src="@drawable/baidupano_indoor_exit" />
+
+        <TextView
+            android:id="@+id/textAsync"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/baidupano_shape_phototxt_bg"
+            android:gravity="center_horizontal"
+            android:paddingBottom="3dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:singleLine="true"
+            android:textColor="#ebedf0"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/img_stroke"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/baidupano_shape_photocase" />
+    </FrameLayout>
+
+</com.baidu.lbsapi.panodemo.indoor.view.SinglePhotoLayout>

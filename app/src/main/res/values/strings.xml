@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">BaiduPanoSDKDemo</string>
+    <string name="demo_title_panorama">打开全景</string>
+    <string name="demo_title_coordinate">坐标转换</string>
+    <string name="demo_desc_pid">通过百度全景ID(PID)获取全景</string>
+    <string name="demo_desc_geo">通过百度经纬度坐标获取全景</string>
+    <string name="demo_desc_mercator">通过百度墨卡托坐标获取全景</string>
+    <string name="demo_desc_uid_street">通过百度地图UID获取外景</string>
+    <string name="demo_desc_uid_interior">通过百度地图UID获取内景</string>
+    <string name="demo_desc_uid_street_customalbum">通过百度地图UID获取外景(自定义相册)</string>
+    <string name="demo_desc_marker">添加自定义标注到全景图</string>
+    <string name="demo_desc_other">其他全景参数设置</string>
+    <string name="demo_desc_coordinate_converter">高德, 腾讯, 谷歌坐标转换百度坐标</string>
+    <string name="demo_desc_baisic_map">基础地图展示</string>
+
+</resources>
