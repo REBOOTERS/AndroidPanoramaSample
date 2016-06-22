@@ -8,6 +8,8 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.baidu.lbsapi.BMapManager;
@@ -34,8 +36,8 @@ public class PanoDemoMain extends Activity {
     private PanoramaView mPanoView;
     private TextView textTitle;
 
-    private  double latitude = 39.963175;
-    private  double longitude = 116.400244;
+    private double latitude = 39.963175;
+    private double longitude = 116.400244;
 
 
     //地图
@@ -46,7 +48,9 @@ public class PanoDemoMain extends Activity {
     private final int ACTION_CLICK = 1;
 
     //title是否可见
-    private boolean titleVisible=true;
+    private boolean titleVisible = true;
+    //title显示隐藏动画
+    private Animation animationShow, animationHide;
     //地图层
     private GLSurfaceView sv;
 
@@ -119,6 +123,9 @@ public class PanoDemoMain extends Activity {
         //改变地图状态
         mBaiduMap.setMapStatus(mMapStatusUpdate);
 
+
+        animationShow = AnimationUtils.loadAnimation(this, R.anim.pop_show_animation);
+        animationHide = AnimationUtils.loadAnimation(this, R.anim.pop_hidden_animation);
 
     }
 
@@ -202,12 +209,13 @@ public class PanoDemoMain extends Activity {
             switch (msg.what) {
                 case ACTION_CLICK:
                     if (titleVisible) {
-                        titleVisible=false;
+                        titleVisible = false;
+                        textTitle.startAnimation(animationHide);
                         textTitle.setVisibility(View.GONE);
-//                        mMapView.setVisibility(View.GONE);
                         sv.setVisibility(View.GONE);
-                    }else {
-                        titleVisible=true;
+                    } else {
+                        titleVisible = true;
+                        textTitle.startAnimation(animationShow);
                         textTitle.setVisibility(View.VISIBLE);
                         sv.setVisibility(View.VISIBLE);
 
@@ -222,7 +230,7 @@ public class PanoDemoMain extends Activity {
                     //构建MarkerOption，用于在地图上添加Marker
                     option = new MarkerOptions()
                             .position(point)
-                            .rotate(heading)
+                            .rotate(360-heading)
                             .icon(bitmap);
                     //在地图上添加Marker，并显示
                     mBaiduMap.addOverlay(option);
