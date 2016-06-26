@@ -134,7 +134,7 @@ public class PanoViewActivity extends Activity {
 
         mPanoView.setShowTopoLink(true);
 
-
+        mPanoView.setPanoramaImageLevel(PanoramaView.ImageDefinition.ImageDefinitionHigh);
         mPanoView.setPanorama(longitude, latitude);
 
         // 测试回调函数,需要注意的是回调函数要在setPanorama()之前调用，否则回调函数可能执行异常
