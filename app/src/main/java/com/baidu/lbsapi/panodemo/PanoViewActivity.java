@@ -27,11 +27,11 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 
 /**
- * 全景Demo主Activity
+ *
  */
-public class PanoDemoMain extends Activity {
+public class PanoViewActivity extends Activity {
 
-    private static final String LTAG = "BaiduPanoSDKDemo";
+    private static final String LTAG =PanoViewActivity.class.getSimpleName();
 
     private PanoramaView mPanoView;
     private TextView textTitle;
@@ -169,7 +169,7 @@ public class PanoDemoMain extends Activity {
                 switch (msgType) {
                     case 8213:
                         //旋转
-                        Log.e(PanoDemoMain.class.getSimpleName(), "now,the heading is " + mPanoView.getPanoramaHeading());
+                        Log.e(PanoViewActivity.class.getSimpleName(), "now,the heading is " + mPanoView.getPanoramaHeading());
                         Message message = new Message();
                         message.what = ACTION_DRAG;
                         message.arg1 = (int) mPanoView.getPanoramaHeading();
@@ -177,7 +177,7 @@ public class PanoDemoMain extends Activity {
                         break;
                     case 12302:
                         //点击
-                        Log.e(PanoDemoMain.class.getSimpleName(), "clicked");
+                        Log.e(PanoViewActivity.class.getSimpleName(), "clicked");
                         Message msg = new Message();
                         msg.what = ACTION_CLICK;
                         handler.sendMessage(msg);

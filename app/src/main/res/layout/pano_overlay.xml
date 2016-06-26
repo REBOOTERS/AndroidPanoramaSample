@@ -3,6 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:background="#ffffffff"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -11,7 +12,7 @@
         android:layout_height="74.0dip"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:background="@drawable/wsdk_pano_image_background">
+        android:background="@drawable/pano_image_background">
 
         <ImageView
             android:id="@+id/panoImageView"
@@ -45,12 +46,12 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5.0dip"
-                android:src="@drawable/wsdk_checkout_pano_arrow" />
+                android:src="@drawable/checkout_pano_arrow" />
         </RelativeLayout>
     </RelativeLayout>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/wsdk_pano_image_background_tip" />
+        android:background="@drawable/pano_image_background_tip" />
 </LinearLayout>
