@@ -42,6 +42,10 @@ public class MapViewActivity extends Activity {
 
     private final String baseUrl = "http://pcsv1.map.bdimg.com/scape/?qt=pdata&pos=0_0&z=0&sid=";
 
+
+    /**
+     * 假设我们当前的位置在此
+     */
     private final double latitude = 39.963175;
     private final double longitude = 116.400244;
 
@@ -57,8 +61,9 @@ public class MapViewActivity extends Activity {
         mContext = this;
         handler = new myHandler();
         mMapView = (MapView) findViewById(R.id.bmapView);
-        mBaiduMap = mMapView.getMap();
 
+
+        mBaiduMap = mMapView.getMap();
         //定义Maker坐标点
         point = new LatLng(latitude, longitude);
         //定义地图状态
@@ -90,7 +95,7 @@ public class MapViewActivity extends Activity {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, PanoDemoMain.class);
+                Intent intent = new Intent(mContext, PanoViewActivity.class);
                 intent.putExtra("latitude", latitude);
                 intent.putExtra("longitude", longitude);
                 startActivity(intent);
@@ -127,8 +132,6 @@ public class MapViewActivity extends Activity {
             if (msg.what == 0x01) {
                 String url = (String) msg.obj;
                 Glide.with(mContext).load(url).into(pic);
-
-
                 InfoWindow mInfoWindow = new InfoWindow(view, point, -57);
                 //显示InfoWindow
                 mBaiduMap.showInfoWindow(mInfoWindow);

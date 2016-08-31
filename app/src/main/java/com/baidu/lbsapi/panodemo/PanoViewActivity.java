@@ -12,14 +12,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.baidu.lbsapi.BMapManager;
-import com.baidu.lbsapi.panodemo.bean.HotCityPanoBean;
-import com.baidu.lbsapi.panodemo.bean.PanoramaBean;
 import com.baidu.lbsapi.panoramaview.PanoramaView;
 import com.baidu.lbsapi.panoramaview.PanoramaViewListener;
-import com.baidu.lbsapi.tools.CoordinateConverter;
-import com.baidu.lbsapi.tools.Point;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -163,29 +158,18 @@ public class PanoDemoMain extends Activity {
 
             @Override
             public void onDescriptionLoadEnd(String json) {
-//                Log.e(LTAG, "onDescriptionLoadEnd : " + json);
+                Log.e(LTAG, "onDescriptionLoadEnd : " + json);
 
 
-                PanoramaBean panoramaBean = JSON.parseObject(json, PanoramaBean.class);
-
-                Log.e(LTAG, "------" + panoramaBean.getX() + ", " + panoramaBean.getY());
-                Point llPoint = CoordinateConverter.MCConverter2LL(panoramaBean.getX(), panoramaBean.getY());
-                Log.e(LTAG, "------" + llPoint.y + ", " + llPoint.x);
-
-                HotCityPanoBean hotCityPanoBean=new HotCityPanoBean();
-                hotCityPanoBean.setName("");
-                hotCityPanoBean.setPid("");
-                hotCityPanoBean.setLatitude(llPoint.y);
-                hotCityPanoBean.setLongitude(llPoint.x);
             }
 
             @Override
             public void onMessage(String msgName, int msgType) {
-//                Log.e(LTAG, "msgName--->" + msgName + ", msgType--->" + msgType);
+                Log.e(LTAG, "msgName--->" + msgName + ", msgType--->" + msgType);
                 switch (msgType) {
                     case 8213:
                         //旋转
-//                        Log.e(PanoDemoMain.class.getSimpleName(), "now,the heading is " + mPanoView.getPanoramaHeading());
+                        Log.e(PanoDemoMain.class.getSimpleName(), "now,the heading is " + mPanoView.getPanoramaHeading());
                         Message message = new Message();
                         message.what = ACTION_DRAG;
                         message.arg1 = (int) mPanoView.getPanoramaHeading();
@@ -193,7 +177,7 @@ public class PanoDemoMain extends Activity {
                         break;
                     case 12302:
                         //点击
-//                        Log.e(PanoDemoMain.class.getSimpleName(), "clicked");
+                        Log.e(PanoDemoMain.class.getSimpleName(), "clicked");
                         Message msg = new Message();
                         msg.what = ACTION_CLICK;
                         handler.sendMessage(msg);
