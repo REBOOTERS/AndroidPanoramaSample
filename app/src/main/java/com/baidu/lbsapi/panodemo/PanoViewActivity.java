@@ -12,9 +12,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.baidu.lbsapi.BMapManager;
+import com.baidu.lbsapi.panodemo.bean.HotCityPanoBean;
+import com.baidu.lbsapi.panodemo.bean.PanoramaBean;
 import com.baidu.lbsapi.panoramaview.PanoramaView;
 import com.baidu.lbsapi.panoramaview.PanoramaViewListener;
+import com.baidu.lbsapi.tools.CoordinateConverter;
+import com.baidu.lbsapi.tools.Point;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -29,7 +34,7 @@ import com.baidu.mapapi.model.LatLng;
 /**
  * 全景Demo主Activity
  */
-public class PanoDemoMain extends Activity {
+public class PanoViewActivity extends Activity {
 
     private static final String LTAG = "BaiduPanoSDKDemo";
 
@@ -63,6 +68,8 @@ public class PanoDemoMain extends Activity {
     //构建MarkerOption，用于在地图上添加Marker
     private OverlayOptions option;
 
+    private  String name,pid;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +82,8 @@ public class PanoDemoMain extends Activity {
         if (getIntent() != null) {
             latitude = getIntent().getDoubleExtra("latitude", 0);
             longitude = getIntent().getDoubleExtra("longitude", 0);
+            name = "name";
+            pid = "4373943294879844934";
         }
 
         initView();
@@ -158,18 +167,34 @@ public class PanoDemoMain extends Activity {
 
             @Override
             public void onDescriptionLoadEnd(String json) {
-                Log.e(LTAG, "onDescriptionLoadEnd : " + json);
+
+                PanoramaBean panoramaBean = JSON.parseObject(json, PanoramaBean.class);
+
+                Point pointll= CoordinateConverter.MCConverter2LL(panoramaBean.getX(), panoramaBean.getY());
+
+                HotCityPanoBean hotCityPanoBean=new HotCityPanoBean();
+                hotCityPanoBean.setPid(pid);
+                hotCityPanoBean.setName(name);
+                hotCityPanoBean.setLatitude(pointll.y);
+                hotCityPanoBean.setLongitude(pointll.x);
+
+
+                Log.e(LTAG, "onDescriptionLoadEnd : " + hotCityPanoBean.getLatitude()+", "
+                        +hotCityPanoBean.getLongitude()+"\n"
+                        +hotCityPanoBean.getName()+", "
+                        +hotCityPanoBean.getPid());
+
 
 
             }
 
             @Override
             public void onMessage(String msgName, int msgType) {
-                Log.e(LTAG, "msgName--->" + msgName + ", msgType--->" + msgType);
+//                Log.e(LTAG, "msgName--->" + msgName + ", msgType--->" + msgType);
                 switch (msgType) {
                     case 8213:
                         //旋转
-                        Log.e(PanoDemoMain.class.getSimpleName(), "now,the heading is " + mPanoView.getPanoramaHeading());
+//                        Log.e(PanoViewActivity.class.getSimpleName(), "now,the heading is " + mPanoView.getPanoramaHeading());
                         Message message = new Message();
                         message.what = ACTION_DRAG;
                         message.arg1 = (int) mPanoView.getPanoramaHeading();
@@ -177,7 +202,7 @@ public class PanoDemoMain extends Activity {
                         break;
                     case 12302:
                         //点击
-                        Log.e(PanoDemoMain.class.getSimpleName(), "clicked");
+//                        Log.e(PanoViewActivity.class.getSimpleName(), "clicked");
                         Message msg = new Message();
                         msg.what = ACTION_CLICK;
                         handler.sendMessage(msg);
