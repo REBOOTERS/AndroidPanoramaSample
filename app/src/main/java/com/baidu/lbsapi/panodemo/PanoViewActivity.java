@@ -218,6 +218,16 @@ public class PanoViewActivity extends Activity {
             public void onCustomMarkerClick(String key) {
 
             }
+
+            @Override
+            public void onMoveStart() {
+
+            }
+
+            @Override
+            public void onMoveEnd() {
+
+            }
         });
 
 

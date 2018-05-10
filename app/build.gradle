@@ -1,14 +1,20 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug {
+            keyAlias 'map_key'
+            keyPassword '123456'
+            storeFile file("$rootDir/app/map_key")
+            storePassword '123456'
+        }
+    }
     compileSdkVersion 27
-
     defaultConfig {
         applicationId "com.baidu.lbsapi.panodemo"
         minSdkVersion 15
         targetSdkVersion 27
     }
-
     buildTypes {
         release {
             minifyEnabled false

@@ -31,7 +31,7 @@
         android:theme="@android:style/Theme.Holo">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="DD279b2a90afdf0ae7a3796787a0742e" />
+            android:value="fMcBERzeyWDZ7IM37pSxco2O1bN2BCIB" />
 
         <activity
             android:name=".MapViewActivity"
