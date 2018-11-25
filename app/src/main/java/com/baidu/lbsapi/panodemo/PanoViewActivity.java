@@ -19,6 +19,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -87,6 +89,8 @@ public class PanoViewActivity extends Activity {
     private OverlayOptions option;
 
     private String name, pid;
+
+    private ScreenView mScreenView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -164,17 +168,15 @@ public class PanoViewActivity extends Activity {
             }
         });
 
+
     }
 
     private void crop0() {
         View view = this.getWindow().getDecorView();
-
-        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-        view.buildDrawingCache();
-
         view.setDrawingCacheEnabled(true);
         Bitmap bmp = Bitmap.createBitmap(view.getDrawingCache());
+
+//        Bitmap bmp = mScreenView.getBitmap();
         saveBitmap(bmp);
     }
 
@@ -193,8 +195,10 @@ public class PanoViewActivity extends Activity {
             Log.d("xxx", "saveBitmap: 1return");
             return;
         }
+
+
         try {
-            filePic = new File(savePath  + ".jpg");
+            filePic = new File(savePath + System.currentTimeMillis() + ".jpg");
             if (!filePic.exists()) {
                 filePic.getParentFile().mkdirs();
                 filePic.createNewFile();
