@@ -1,8 +1,21 @@
 package com.baidu.lbsapi.panodemo;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.PixelFormat;
+import android.hardware.display.DisplayManager;
+import android.hardware.display.VirtualDisplay;
+import android.media.Image;
+import android.media.ImageReader;
+import android.media.projection.MediaProjection;
+import android.media.projection.MediaProjectionManager;
 import android.opengl.GLSurfaceView;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -11,6 +24,7 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.baidu.lbsapi.BMapManager;
@@ -30,6 +44,10 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * 全景Demo主Activity
@@ -68,7 +86,7 @@ public class PanoViewActivity extends Activity {
     //构建MarkerOption，用于在地图上添加Marker
     private OverlayOptions option;
 
-    private  String name,pid;
+    private String name, pid;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -136,7 +154,105 @@ public class PanoViewActivity extends Activity {
         animationShow = AnimationUtils.loadAnimation(this, R.anim.pop_show_animation);
         animationHide = AnimationUtils.loadAnimation(this, R.anim.pop_hidden_animation);
 
+        findViewById(R.id.crop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                crop0();
+
+//                crop1();
+            }
+        });
+
     }
+
+    private void crop0() {
+        View view = this.getWindow().getDecorView();
+
+        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        view.buildDrawingCache();
+
+        view.setDrawingCacheEnabled(true);
+        Bitmap bmp = Bitmap.createBitmap(view.getDrawingCache());
+        saveBitmap(bmp);
+    }
+
+    public void saveBitmap(Bitmap bitmap) {
+        if (bitmap == null) {
+            Toast.makeText(this, "bitmap is null", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String savePath;
+        File filePic;
+        if (Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            savePath = "/sdcard/11111/pic/";
+        } else {
+            Log.d("xxx", "saveBitmap: 1return");
+            return;
+        }
+        try {
+            filePic = new File(savePath  + ".jpg");
+            if (!filePic.exists()) {
+                filePic.getParentFile().mkdirs();
+                filePic.createNewFile();
+            }
+            FileOutputStream fos = new FileOutputStream(filePic);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.d("xxx", "saveBitmap: 2return");
+            return;
+        }
+        Log.d("xxx", "saveBitmap: " + filePic.getAbsolutePath());
+    }
+
+    private void crop1() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            startActivityForResult(
+                    ((MediaProjectionManager) getSystemService("media_projection")).createScreenCaptureIntent(), 1);
+        } else {
+            Log.e("TAG", "版本过低,无法截屏");
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && data != null) {
+//            parseData(data);
+        }
+    }
+
+
+//    private void parseData(Intent data){
+//        MediaProjection mMediaProjection = (MediaProjectionManager).getSystemService(
+//                Context.MEDIA_PROJECTION_SERVICE).getMediaProjection(Activity.RESULT_OK,data);
+//        ImageReader mImageReader = ImageReader.newInstance(
+//                getScreenWidth(),
+//                getScreenHeight(),
+//                PixelFormat.RGBA_8888,1);
+//        VirtualDisplay mVirtualDisplay = mMediaProjection.createVirtualDisplay("screen-mirror",
+//                getScreenWidth(),
+//                getScreenHeight(),
+//                Resources.getSystem().getDisplayMetrics().densityDpi,
+//                DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
+//                mImageReader.getSurface(), null, null);
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                Image image = mImageReader.acquireLatestImage();
+//                // TODO 将image保存到本地即可
+//            }
+//        }, 300);
+//        mVirtualDisplay.release();
+//        mVirtualDisplay = null;
+//    }
 
     private void testPano() {
         handler = new MyHandler();
@@ -170,20 +286,19 @@ public class PanoViewActivity extends Activity {
 
                 PanoramaBean panoramaBean = JSON.parseObject(json, PanoramaBean.class);
 
-                Point pointll= CoordinateConverter.MCConverter2LL(panoramaBean.getX(), panoramaBean.getY());
+                Point pointll = CoordinateConverter.MCConverter2LL(panoramaBean.getX(), panoramaBean.getY());
 
-                HotCityPanoBean hotCityPanoBean=new HotCityPanoBean();
+                HotCityPanoBean hotCityPanoBean = new HotCityPanoBean();
                 hotCityPanoBean.setPid(pid);
                 hotCityPanoBean.setName(name);
                 hotCityPanoBean.setLatitude(pointll.y);
                 hotCityPanoBean.setLongitude(pointll.x);
 
 
-                Log.e(LTAG, "onDescriptionLoadEnd : " + hotCityPanoBean.getLatitude()+", "
-                        +hotCityPanoBean.getLongitude()+"\n"
-                        +hotCityPanoBean.getName()+", "
-                        +hotCityPanoBean.getPid());
-
+                Log.e(LTAG, "onDescriptionLoadEnd : " + hotCityPanoBean.getLatitude() + ", "
+                        + hotCityPanoBean.getLongitude() + "\n"
+                        + hotCityPanoBean.getName() + ", "
+                        + hotCityPanoBean.getPid());
 
 
             }
@@ -265,7 +380,7 @@ public class PanoViewActivity extends Activity {
                     //构建MarkerOption，用于在地图上添加Marker
                     option = new MarkerOptions()
                             .position(point)
-                            .rotate(360-heading)
+                            .rotate(360 - heading)
                             .icon(bitmap);
                     //在地图上添加Marker，并显示
                     mBaiduMap.addOverlay(option);
