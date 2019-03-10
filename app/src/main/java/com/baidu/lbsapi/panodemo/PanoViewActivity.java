@@ -17,14 +17,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.PixelCopy;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -92,6 +95,10 @@ public class PanoViewActivity extends Activity {
 
     private ScreenView mScreenView;
 
+    private SurfaceView mSurfaceView;
+
+    private RelativeLayout mToolbbar;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +133,8 @@ public class PanoViewActivity extends Activity {
         mPanoView = (PanoramaView) findViewById(R.id.panorama);
 
 
+        mPanoView.setPanoramaImageLevel(PanoramaView.ImageDefinition.ImageDefinitionHigh);
+
         mMapView = (MapView) findViewById(R.id.bmapView);
         mBaiduMap = mMapView.getMap();
 
@@ -154,7 +163,7 @@ public class PanoViewActivity extends Activity {
         //改变地图状态
         mBaiduMap.setMapStatus(mMapStatusUpdate);
 
-
+        mToolbbar = findViewById(R.id.toolbar);
         animationShow = AnimationUtils.loadAnimation(this, R.anim.pop_show_animation);
         animationHide = AnimationUtils.loadAnimation(this, R.anim.pop_hidden_animation);
 
@@ -162,23 +171,40 @@ public class PanoViewActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                crop0();
 
-//                crop1();
+                crop1();
             }
         });
 
 
+        if (mPanoView != null && mPanoView.getChildCount() > 0) {
+            if (mPanoView.getChildAt(0) instanceof SurfaceView) {
+                mSurfaceView = (SurfaceView) mPanoView.getChildAt(0);
+
+                Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
     }
 
-    private void crop0() {
-        View view = this.getWindow().getDecorView();
-        view.setDrawingCacheEnabled(true);
-        Bitmap bmp = Bitmap.createBitmap(view.getDrawingCache());
+    private void crop1() {
+        final Bitmap bitmap = Bitmap.createBitmap(mPanoView.getWidth(), mPanoView.getHeight(), Bitmap.Config.ARGB_8888);
 
-//        Bitmap bmp = mScreenView.getBitmap();
-        saveBitmap(bmp);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            PixelCopy.request(mSurfaceView, bitmap, new PixelCopy.OnPixelCopyFinishedListener() {
+                @Override
+                public void onPixelCopyFinished(int copyResult) {
+                    Log.e("xxx", "copyResult==" + copyResult);
+                    saveBitmap(bitmap);
+
+                }
+            }, new Handler(Looper.getMainLooper()));
+        }
     }
+
 
     public void saveBitmap(Bitmap bitmap) {
         if (bitmap == null) {
@@ -190,9 +216,9 @@ public class PanoViewActivity extends Activity {
         File filePic;
         if (Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) {
-            savePath = "/sdcard/11111/pic/";
+            savePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath() + File.separator;
         } else {
-            Log.d("xxx", "saveBitmap: 1return");
+            Log.e("xxx", "saveBitmap: 1return");
             return;
         }
 
@@ -209,54 +235,12 @@ public class PanoViewActivity extends Activity {
             fos.close();
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d("xxx", "saveBitmap: 2return");
+            Log.e("xxx", "saveBitmap: 2return");
             return;
         }
-        Log.d("xxx", "saveBitmap: " + filePic.getAbsolutePath());
+        Log.e("xxx", "saveBitmap: " + filePic.getAbsolutePath());
     }
 
-    private void crop1() {
-        if (Build.VERSION.SDK_INT >= 21) {
-            startActivityForResult(
-                    ((MediaProjectionManager) getSystemService("media_projection")).createScreenCaptureIntent(), 1);
-        } else {
-            Log.e("TAG", "版本过低,无法截屏");
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && data != null) {
-//            parseData(data);
-        }
-    }
-
-
-//    private void parseData(Intent data){
-//        MediaProjection mMediaProjection = (MediaProjectionManager).getSystemService(
-//                Context.MEDIA_PROJECTION_SERVICE).getMediaProjection(Activity.RESULT_OK,data);
-//        ImageReader mImageReader = ImageReader.newInstance(
-//                getScreenWidth(),
-//                getScreenHeight(),
-//                PixelFormat.RGBA_8888,1);
-//        VirtualDisplay mVirtualDisplay = mMediaProjection.createVirtualDisplay("screen-mirror",
-//                getScreenWidth(),
-//                getScreenHeight(),
-//                Resources.getSystem().getDisplayMetrics().densityDpi,
-//                DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
-//                mImageReader.getSurface(), null, null);
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                Image image = mImageReader.acquireLatestImage();
-//                // TODO 将image保存到本地即可
-//            }
-//        }, 300);
-//        mVirtualDisplay.release();
-//        mVirtualDisplay = null;
-//    }
 
     private void testPano() {
         handler = new MyHandler();
@@ -364,13 +348,13 @@ public class PanoViewActivity extends Activity {
                 case ACTION_CLICK:
                     if (titleVisible) {
                         titleVisible = false;
-                        textTitle.startAnimation(animationHide);
-                        textTitle.setVisibility(View.GONE);
+                        mToolbbar.startAnimation(animationHide);
+//                        textTitle.setVisibility(View.GONE);
                         sv.setVisibility(View.GONE);
                     } else {
                         titleVisible = true;
-                        textTitle.startAnimation(animationShow);
-                        textTitle.setVisibility(View.VISIBLE);
+                        mToolbbar.startAnimation(animationShow);
+//                        textTitle.setVisibility(View.VISIBLE);
                         sv.setVisibility(View.VISIBLE);
 
                     }
