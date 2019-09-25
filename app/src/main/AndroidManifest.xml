@@ -47,6 +47,8 @@
         </activity>
 
         <activity android:name=".PanoViewActivity"/>
+        
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
     </application>
 
