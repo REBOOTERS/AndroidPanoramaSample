@@ -1,7 +1,6 @@
 package com.baidu.lbsapi.panodemo.indoor.view;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,13 +17,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.baidu.lbsapi.panodemo.R;
+import com.baidu.lbsapi.panodemo.indoor.model.AlbumPicInfo;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import com.baidu.lbsapi.panodemo.R;
-import com.baidu.lbsapi.panodemo.indoor.model.AlbumPicInfo;
 
 /**
  * 相册控件
@@ -41,7 +42,7 @@ public class PhotoAlbumView extends HorizontalScrollView {
     private static final int PHOTOALBUM_STOP_SRCOLL = 1;
     /* X轴范围最大超出距离 */
     private static final int MAX_X_OVERSCROLL_DISTANCE = 200;
-    /* 从属Activity */ Activity mContext;
+    /* 从属Activity */ AppCompatActivity mContext;
     /* SSPhotoAlbumView中的横向布局 */
     public LinearLayout mLayout;
     /* 当前X轴位置 */
@@ -72,12 +73,12 @@ public class PhotoAlbumView extends HorizontalScrollView {
 
     public PhotoAlbumView(Context context) {
         super(context);
-        mContext = (Activity) context;
+        mContext = (AppCompatActivity) context;
     }
 
     public PhotoAlbumView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mContext = (Activity) context;
+        mContext = (AppCompatActivity) context;
         final float ppi = context.getResources().getDisplayMetrics().density * 160.0f;
         mPhysicalCoeff = SensorManager.GRAVITY_EARTH // g (m/s^2)
                 * 39.37f // inch/meter

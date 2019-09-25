@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -46,7 +47,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5.0dip"
-                android:src="@drawable/checkout_pano_arrow" />
+                app:srcCompat="@drawable/checkout_pano_arrow" />
         </RelativeLayout>
     </RelativeLayout>
 

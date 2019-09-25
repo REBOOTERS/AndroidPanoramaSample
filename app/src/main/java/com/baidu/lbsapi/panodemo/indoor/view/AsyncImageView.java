@@ -4,8 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+
 import android.util.AttributeSet;
-import android.widget.ImageView;
+
+import androidx.appcompat.widget.AppCompatImageView;
 
 import com.baidu.lbsapi.panodemo.R;
 import com.baidu.pano.platform.plugin.PluginHttpExecutor;
@@ -13,7 +15,7 @@ import com.baidu.pano.platform.plugin.PluginHttpExecutor;
 /**
  * 异步图片加载
  */
-public class AsyncImageView extends ImageView {
+public class AsyncImageView extends AppCompatImageView {
 
     private int mType;
 

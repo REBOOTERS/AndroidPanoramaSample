@@ -1,6 +1,5 @@
 package com.baidu.lbsapi.panodemo;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +8,8 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.baidu.lbsapi.model.BaiduPanoData;
 import com.baidu.lbsapi.panoramaview.PanoramaRequest;
@@ -28,7 +29,7 @@ import com.bumptech.glide.Glide;
 /**
  * Created by co-mall on 2016/6/21.
  */
-public class MapViewActivity extends Activity {
+public class MapViewActivity extends AppCompatActivity {
     private Context mContext;
 
     private MapView mMapView;

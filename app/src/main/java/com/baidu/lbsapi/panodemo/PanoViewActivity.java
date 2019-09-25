@@ -1,17 +1,6 @@
 package com.baidu.lbsapi.panodemo;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.PixelFormat;
-import android.hardware.display.DisplayManager;
-import android.hardware.display.VirtualDisplay;
-import android.media.Image;
-import android.media.ImageReader;
-import android.media.projection.MediaProjection;
-import android.media.projection.MediaProjectionManager;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,7 +10,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.PixelCopy;
-import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
@@ -30,6 +18,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.fastjson.JSON;
 import com.baidu.lbsapi.BMapManager;
@@ -49,7 +39,6 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -58,7 +47,7 @@ import java.io.IOException;
 /**
  * 全景Demo主Activity
  */
-public class PanoViewActivity extends Activity {
+public class PanoViewActivity extends AppCompatActivity {
 
     private static final String LTAG = "BaiduPanoSDKDemo";
 
