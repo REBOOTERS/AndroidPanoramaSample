@@ -17,7 +17,7 @@ public class PanoDemoApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-        SDKInitializer.initialize(getApplicationContext());
+        SDKInitializer.initialize(this);
         initEngineManager(this);
     }
 
