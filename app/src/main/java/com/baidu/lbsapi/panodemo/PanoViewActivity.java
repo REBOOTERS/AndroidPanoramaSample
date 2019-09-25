@@ -1,5 +1,6 @@
 package com.baidu.lbsapi.panodemo;
 
+import android.Manifest;
 import android.graphics.Bitmap;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
@@ -39,6 +40,7 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -392,5 +394,10 @@ public class PanoViewActivity extends AppCompatActivity {
         super.onPause();
         //在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
         mMapView.onPause();
+    }
+
+    private void requestPremission() {
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 }
