@@ -1,6 +1,7 @@
 package com.baidu.lbsapi.panodemo;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
@@ -45,6 +46,8 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import io.reactivex.functions.Consumer;
 
 /**
  * 全景Demo主Activity
@@ -162,9 +165,9 @@ public class PanoViewActivity extends AppCompatActivity {
         findViewById(R.id.crop).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                requestPermission();
 
-
-                crop1();
+//                crop1();
             }
         });
 
@@ -396,8 +399,18 @@ public class PanoViewActivity extends AppCompatActivity {
         mMapView.onPause();
     }
 
-    private void requestPremission() {
+
+    @SuppressLint("CheckResult")
+    private void requestPermission() {
         RxPermissions rxPermissions = new RxPermissions(this);
-        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean) {
+                            crop1();
+                        }
+                    }
+                });
     }
 }
