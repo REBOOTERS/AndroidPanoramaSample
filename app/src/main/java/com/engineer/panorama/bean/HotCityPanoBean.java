@@ -1,4 +1,4 @@
-package com.baidu.lbsapi.panodemo.bean;
+package com.engineer.panorama.bean;
 
 /**
  * Created by co-mall on 2016/8/31.

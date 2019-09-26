@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">BaiduPanoSDKDemo</string>
+    <string name="app_name">Panorama</string>
     <string name="demo_title_panorama">打开全景</string>
     <string name="demo_title_coordinate">坐标转换</string>
     <string name="demo_desc_pid">通过百度全景ID(PID)获取全景</string>

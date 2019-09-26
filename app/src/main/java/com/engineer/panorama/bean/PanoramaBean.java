@@ -1,4 +1,4 @@
-package com.baidu.lbsapi.panodemo.bean;
+package com.engineer.panorama.bean;
 
 import java.util.List;
 

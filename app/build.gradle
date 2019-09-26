@@ -11,7 +11,7 @@ android {
     }
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.baidu.lbsapi.panodemo"
+        applicationId "com.engineer.panorama"
         minSdkVersion 21
         targetSdkVersion 28
     }

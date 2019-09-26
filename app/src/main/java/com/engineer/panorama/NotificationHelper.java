@@ -1,4 +1,4 @@
-package com.baidu.lbsapi.panodemo;
+package com.engineer.panorama;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;

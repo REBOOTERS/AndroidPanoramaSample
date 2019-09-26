@@ -1,4 +1,4 @@
-package com.baidu.lbsapi.panodemo;
+package com.engineer.panorama;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -25,8 +25,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.fastjson.JSON;
 import com.baidu.lbsapi.BMapManager;
-import com.baidu.lbsapi.panodemo.bean.HotCityPanoBean;
-import com.baidu.lbsapi.panodemo.bean.PanoramaBean;
+import com.engineer.panorama.bean.HotCityPanoBean;
+import com.engineer.panorama.bean.PanoramaBean;
 import com.baidu.lbsapi.panoramaview.PanoramaView;
 import com.baidu.lbsapi.panoramaview.PanoramaViewListener;
 import com.baidu.lbsapi.tools.CoordinateConverter;

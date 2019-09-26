@@ -1,4 +1,4 @@
-package com.baidu.lbsapi.panodemo;
+package com.engineer.panorama;
 
 import android.app.PendingIntent;
 import android.content.Context;
