@@ -1,6 +1,7 @@
 package com.engineer.panorama;
 
 import android.Manifest;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.opengl.GLSurfaceView;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,8 +48,18 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 全景Demo主Activity
@@ -94,13 +106,13 @@ public class PanoViewActivity extends AppCompatActivity {
 
     private RelativeLayout mToolbbar;
 
+    private ValueAnimator valueAnimator;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        // 先初始化BMapManager
-        initBMapManager();
         setContentView(R.layout.panodemo_main);
 
         if (getIntent() != null) {
@@ -115,13 +127,6 @@ public class PanoViewActivity extends AppCompatActivity {
         testPano();
     }
 
-    private void initBMapManager() {
-        PanoDemoApplication app = (PanoDemoApplication) this.getApplication();
-        if (app.mBMapManager == null) {
-            app.mBMapManager = new BMapManager(app);
-            app.mBMapManager.init(new PanoDemoApplication.MyGeneralListener());
-        }
-    }
 
     private void initView() {
         textTitle = (TextView) findViewById(R.id.panodemo_main_title);
@@ -256,6 +261,7 @@ public class PanoViewActivity extends AppCompatActivity {
             @Override
             public void onLoadPanoramaEnd(String json) {
 //                Log.e(LTAG, "onLoadPanoramaEnd : " + json);
+                startAuto();
             }
 
             @Override
@@ -331,6 +337,24 @@ public class PanoViewActivity extends AppCompatActivity {
 
     }
 
+    private void startAuto() {
+        if (valueAnimator == null) {
+            runOnUiThread(() -> {
+                valueAnimator = ValueAnimator.ofFloat(0, 360);
+                valueAnimator.addUpdateListener(animation -> {
+                    float value = (float) animation.getAnimatedValue();
+                    Log.e("zz", "value==" + value);
+                    mPanoView.setPanoramaHeading(value);
+                });
+                valueAnimator.setDuration(36000);
+                valueAnimator.setInterpolator(new LinearInterpolator());
+                valueAnimator.start();
+            });
+        }
+
+
+    }
+
 
     private class MyHandler extends Handler {
 
@@ -383,6 +407,11 @@ public class PanoViewActivity extends AppCompatActivity {
         super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mMapView.onDestroy();
+        if (valueAnimator != null && valueAnimator.isRunning()) {
+            valueAnimator.end();
+            valueAnimator.removeAllUpdateListeners();
+            valueAnimator = null;
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.engineer.panorama;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +27,13 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.bumptech.glide.Glide;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * Created by co-mall on 2016/6/21.
  */
@@ -50,7 +58,6 @@ public class MapViewActivity extends AppCompatActivity {
     private final double latitude = 39.963175;
     private final double longitude = 116.400244;
 
-    private myHandler handler;
     //添加自定义View至mapView
     private View view;
     private ImageView pic;
@@ -60,7 +67,6 @@ public class MapViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapview);
         mContext = this;
-        handler = new myHandler();
         mMapView = (MapView) findViewById(R.id.bmapView);
 
 
@@ -104,42 +110,41 @@ public class MapViewActivity extends AppCompatActivity {
         });
 
 
-        new Thread(new Runnable() {
+        showMiniWindow();
+
+
+    }
+
+    @SuppressLint("CheckResult")
+    private void showMiniWindow() {
+        Observable.create(new ObservableOnSubscribe<String>() {
             @Override
-            public void run() {
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
                 PanoramaRequest request = PanoramaRequest.getInstance(mContext);
                 BaiduPanoData locationPanoData = request.getPanoramaInfoByLatLon(longitude, latitude);
                 //开发者可以判断是否有外景(街景)
                 if (locationPanoData.hasStreetPano()) {
                     String url = baseUrl + locationPanoData.getPid();
-                    Message message = new Message();
-                    message.what = 0x01;
-                    message.obj = url;
-                    handler.sendMessage(message);
+                    emitter.onNext(url);
                 }
-
-
             }
-        }).start();
-
-
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        Glide.with(mContext).load(s).into(pic);
+                        InfoWindow mInfoWindow = new InfoWindow(view, point, -57);
+                        //显示InfoWindow
+                        mBaiduMap.showInfoWindow(mInfoWindow);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        throwable.printStackTrace();
+                    }
+                });
     }
-
-
-    private class myHandler extends Handler {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 0x01) {
-                String url = (String) msg.obj;
-                Glide.with(mContext).load(url).into(pic);
-                InfoWindow mInfoWindow = new InfoWindow(view, point, -57);
-                //显示InfoWindow
-                mBaiduMap.showInfoWindow(mInfoWindow);
-            }
-        }
-    }
-
 
     @Override
     protected void onDestroy() {
