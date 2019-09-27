@@ -3,6 +3,7 @@ package com.engineer.panorama;
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
@@ -167,14 +168,14 @@ public class PanoViewActivity extends AppCompatActivity {
         animationShow = AnimationUtils.loadAnimation(this, R.anim.pop_show_animation);
         animationHide = AnimationUtils.loadAnimation(this, R.anim.pop_hidden_animation);
 
-        findViewById(R.id.crop).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requestPermission();
+        findViewById(R.id.crop).setOnClickListener(v -> requestPermission());
+        findViewById(R.id.menu).setOnClickListener(v -> {
 
-//                crop1();
-            }
-        });
+                    startActivity(new Intent(this,ListPanoViewActivity.class));
+                    finish();
+                }
+
+        );
 
 
         if (mPanoView != null && mPanoView.getChildCount() > 0) {
