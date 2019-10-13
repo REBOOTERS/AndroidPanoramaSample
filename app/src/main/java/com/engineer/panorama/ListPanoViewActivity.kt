@@ -51,6 +51,16 @@ class ListPanoViewActivity : AppCompatActivity() {
             return datas.size
         }
 
+        override fun onViewAttachedToWindow(holder: MyHolder) {
+            super.onViewAttachedToWindow(holder)
+//            holder.panoview.onResume()
+        }
+
+        override fun onViewDetachedFromWindow(holder: MyHolder) {
+            super.onViewDetachedFromWindow(holder)
+//            holder.panoview.onPause()
+        }
+
 
         inner class MyHolder(view: View) : RecyclerView.ViewHolder(view) {
             val panoview = view.findViewById<PanoramaView>(R.id.panorama_item)
