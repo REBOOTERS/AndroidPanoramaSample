@@ -1,10 +1,13 @@
 package com.engineer.panorama
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.PixelFormat
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.SurfaceView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.baidu.lbsapi.panoramaview.PanoramaView
@@ -36,9 +39,22 @@ class ListPanoViewActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
     }
 
+    private fun getSurfaceView(panoramaView: PanoramaView?): SurfaceView? {
+        var mSurfaceView: SurfaceView? = null
+        if (panoramaView != null && panoramaView.childCount > 0) {
+            val temp = panoramaView.getChildAt(0)
+            if (temp is SurfaceView) {
+                mSurfaceView = temp
+                Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return mSurfaceView
+    }
+
     private inner class MyAdapter(var datas: ArrayList<String>) : RecyclerView.Adapter<MyAdapter.MyHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
+
             return MyHolder(view)
         }
 
@@ -51,19 +67,16 @@ class ListPanoViewActivity : AppCompatActivity() {
             return datas.size
         }
 
-        override fun onViewAttachedToWindow(holder: MyHolder) {
-            super.onViewAttachedToWindow(holder)
-//            holder.panoview.onResume()
-        }
-
-        override fun onViewDetachedFromWindow(holder: MyHolder) {
-            super.onViewDetachedFromWindow(holder)
-//            holder.panoview.onPause()
-        }
-
 
         inner class MyHolder(view: View) : RecyclerView.ViewHolder(view) {
             val panoview = view.findViewById<PanoramaView>(R.id.panorama_item)
+            val surfaceView = getSurfaceView(panoview)
+
+            init {
+                surfaceView?.holder?.setFormat(PixelFormat.TRANSPARENT)
+                surfaceView?.setZOrderOnTop(true)
+                surfaceView?.setZOrderMediaOverlay(true)
+            }
         }
     }
 }
