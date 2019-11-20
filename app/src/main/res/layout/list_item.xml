@@ -6,11 +6,10 @@
     android:background="#fff"
     android:orientation="vertical">
 
-    <com.baidu.lbsapi.panoramaview.PanoramaView
+    <WebView
         android:id="@+id/panorama_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
-        android:visibility="visible" />
+        />
 
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.SurfaceView
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,7 +60,9 @@ class ListPanoViewActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: MyHolder, position: Int) {
-            holder.panoview.setPanorama(datas[position])
+
+            val LOCAL_URL = "https://www.baidu.com"
+            holder.panoview.loadUrl(LOCAL_URL)
         }
 
 
@@ -69,13 +72,12 @@ class ListPanoViewActivity : AppCompatActivity() {
 
 
         inner class MyHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val panoview = view.findViewById<PanoramaView>(R.id.panorama_item)
-            val surfaceView = getSurfaceView(panoview)
+            val panoview = view.findViewById<WebView>(R.id.panorama_item)
+            val settings = panoview.settings
 
             init {
-                surfaceView?.holder?.setFormat(PixelFormat.TRANSPARENT)
-                surfaceView?.setZOrderOnTop(true)
-                surfaceView?.setZOrderMediaOverlay(true)
+                settings.javaScriptEnabled = true
+                settings.domStorageEnabled = true
             }
         }
     }
