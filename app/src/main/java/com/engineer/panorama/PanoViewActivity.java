@@ -170,13 +170,14 @@ public class PanoViewActivity extends AppCompatActivity {
 
         findViewById(R.id.crop).setOnClickListener(v -> requestPermission());
         findViewById(R.id.menu).setOnClickListener(v -> {
-
-                    startActivity(new Intent(this,ListPanoViewActivity.class));
+                    startActivity(new Intent(this, ListPanoViewActivity.class));
                     finish();
                 }
-
         );
-
+        findViewById(R.id.list).setOnClickListener(v -> {
+            startActivity(new Intent(this, ListMapViewActivity.class));
+            finish();
+        });
 
         if (mPanoView != null && mPanoView.getChildCount() > 0) {
             if (mPanoView.getChildAt(0) instanceof SurfaceView) {
