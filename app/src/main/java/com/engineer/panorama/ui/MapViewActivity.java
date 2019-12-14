@@ -1,11 +1,9 @@
-package com.engineer.panorama;
+package com.engineer.panorama.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,6 +24,8 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.bumptech.glide.Glide;
+import com.engineer.panorama.R;
+import com.engineer.panorama.ui.PanoViewActivity;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;

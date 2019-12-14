@@ -1,4 +1,4 @@
-package com.engineer.panorama
+package com.engineer.panorama.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.baidu.mapapi.map.MapStatusUpdateFactory
-import com.baidu.mapapi.map.MyLocationData
 import com.baidu.mapapi.map.TextureMapView
 import com.baidu.mapapi.model.LatLng
+import com.engineer.panorama.R
 import kotlinx.android.synthetic.main.activity_list_pano_view.*
 
 

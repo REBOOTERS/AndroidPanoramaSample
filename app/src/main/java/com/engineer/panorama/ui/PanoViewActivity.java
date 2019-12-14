@@ -1,4 +1,4 @@
-package com.engineer.panorama;
+package com.engineer.panorama.ui;
 
 import android.Manifest;
 import android.animation.ValueAnimator;
@@ -27,7 +27,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.fastjson.JSON;
-import com.baidu.lbsapi.BMapManager;
+import com.engineer.panorama.R;
+import com.engineer.panorama.ScreenView;
 import com.engineer.panorama.bean.HotCityPanoBean;
 import com.engineer.panorama.bean.PanoramaBean;
 import com.baidu.lbsapi.panoramaview.PanoramaView;
@@ -49,18 +50,8 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 全景Demo主Activity

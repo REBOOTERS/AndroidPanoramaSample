@@ -1,6 +1,5 @@
-package com.engineer.panorama
+package com.engineer.panorama.ui
 
-import android.graphics.PixelFormat
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.SurfaceView
@@ -12,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.baidu.lbsapi.panoramaview.PanoramaView
+import com.engineer.panorama.R
 import kotlinx.android.synthetic.main.activity_list_pano_view.*
 
 class ListPanoViewActivity : AppCompatActivity() {
