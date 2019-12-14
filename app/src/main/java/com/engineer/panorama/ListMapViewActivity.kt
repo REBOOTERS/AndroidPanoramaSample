@@ -7,11 +7,15 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.baidu.mapapi.map.MapView
+import com.baidu.mapapi.map.MapStatusUpdateFactory
+import com.baidu.mapapi.map.MyLocationData
+import com.baidu.mapapi.map.TextureMapView
+import com.baidu.mapapi.model.LatLng
 import kotlinx.android.synthetic.main.activity_list_pano_view.*
 
+
 class ListMapViewActivity : AppCompatActivity() {
-    private var datas: ArrayList<String> = ArrayList()
+    private var datas: ArrayList<LatLng> = ArrayList()
     private lateinit var adapter: MyAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,20 +28,19 @@ class ListMapViewActivity : AppCompatActivity() {
     }
 
     private fun refresh() {
-        datas.add("1400220012180629140838219UZ")
-        datas.add("0802150001151204150545865UZ")
-        datas.add("09002200001503210057381717E")
-        datas.add("1802100000140610112407862IN")
-        datas.add("1400030012180614003743111UZ")
-        datas.add("09002500001505030202473035X")
-        datas.add("0900600012170406114723000IN")
-        datas.add("0901740000071126021842800IN")
-        datas.add("1402430012180315162159339UZ")
+
+
+        val GEO_BEIJING = LatLng(39.945, 116.404)
+        for (i in 0..10) {
+            val delta = i / 10f
+            val data = LatLng(GEO_BEIJING.latitude + delta, GEO_BEIJING.longitude + delta)
+            datas.add(data)
+        }
         adapter.notifyDataSetChanged()
     }
 
 
-    private inner class MyAdapter(var datas: ArrayList<String>) : RecyclerView.Adapter<MyAdapter.MyHolder>() {
+    private inner class MyAdapter(var datas: ArrayList<LatLng>) : RecyclerView.Adapter<MyAdapter.MyHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_mapview, parent, false)
 
@@ -45,8 +48,8 @@ class ListMapViewActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: MyHolder, position: Int) {
-
-//            holder.panoview
+            val status = MapStatusUpdateFactory.newLatLng(datas[position])
+            holder.mapview.map.setMapStatus(status)
         }
 
 
@@ -56,7 +59,8 @@ class ListMapViewActivity : AppCompatActivity() {
 
 
         inner class MyHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val panoview = view.findViewById<MapView>(R.id.map_item)
+            val mapview = view.findViewById<TextureMapView>(R.id.map_item)
         }
     }
+
 }
