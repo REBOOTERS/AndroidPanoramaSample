@@ -28,7 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.fastjson.JSON;
 import com.engineer.panorama.R;
-import com.engineer.panorama.ScreenView;
+import com.engineer.panorama.util.ScreenView;
 import com.engineer.panorama.bean.HotCityPanoBean;
 import com.engineer.panorama.bean.PanoramaBean;
 import com.baidu.lbsapi.panoramaview.PanoramaView;

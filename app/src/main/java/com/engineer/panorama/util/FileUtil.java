@@ -1,4 +1,4 @@
-package com.engineer.panorama;
+package com.engineer.panorama.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;

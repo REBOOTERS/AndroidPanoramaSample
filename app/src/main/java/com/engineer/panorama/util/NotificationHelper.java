@@ -1,4 +1,4 @@
-package com.engineer.panorama;
+package com.engineer.panorama.util;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -7,6 +7,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.provider.Settings;
 import androidx.core.app.NotificationCompat;
+
+import com.engineer.panorama.R;
 
 
 /**

@@ -99,14 +99,11 @@ public class MapViewActivity extends AppCompatActivity {
         pic = (ImageView) view.findViewById(R.id.panoImageView);
 
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, PanoViewActivity.class);
-                intent.putExtra("latitude", latitude);
-                intent.putExtra("longitude", longitude);
-                startActivity(intent);
-            }
+        view.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, PanoViewActivity.class);
+            intent.putExtra("latitude", latitude);
+            intent.putExtra("longitude", longitude);
+            startActivity(intent);
         });
 
 
@@ -117,16 +114,13 @@ public class MapViewActivity extends AppCompatActivity {
 
     @SuppressLint("CheckResult")
     private void showMiniWindow() {
-        Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
-                PanoramaRequest request = PanoramaRequest.getInstance(mContext);
-                BaiduPanoData locationPanoData = request.getPanoramaInfoByLatLon(longitude, latitude);
-                //开发者可以判断是否有外景(街景)
-                if (locationPanoData.hasStreetPano()) {
-                    String url = baseUrl + locationPanoData.getPid();
-                    emitter.onNext(url);
-                }
+        Observable.create((ObservableOnSubscribe<String>) emitter -> {
+            PanoramaRequest request = PanoramaRequest.getInstance(mContext);
+            BaiduPanoData locationPanoData = request.getPanoramaInfoByLatLon(longitude, latitude);
+            //开发者可以判断是否有外景(街景)
+            if (locationPanoData.hasStreetPano()) {
+                String url = baseUrl + locationPanoData.getPid();
+                emitter.onNext(url);
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
