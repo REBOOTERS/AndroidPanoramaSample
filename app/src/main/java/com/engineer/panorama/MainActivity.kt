@@ -3,10 +3,7 @@ package com.engineer.panorama
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.engineer.panorama.ui.ListMapViewActivity
-import com.engineer.panorama.ui.ListPanoViewActivity
-import com.engineer.panorama.ui.MapViewActivity
-import com.engineer.panorama.ui.PanoPagerActivity
+import com.engineer.panorama.ui.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -29,6 +26,10 @@ class MainActivity : AppCompatActivity() {
 
         pano_pager.setOnClickListener {
             startActivity(Intent(this, PanoPagerActivity::class.java))
+        }
+
+        multi_pano.setOnClickListener {
+            startActivity(Intent(this, MultiPanoViewActivity::class.java))
         }
     }
 }
