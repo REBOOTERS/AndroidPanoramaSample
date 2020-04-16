@@ -11,7 +11,7 @@ import android.view.SurfaceHolder;
 import com.baidu.pano.platform.comapi.map.InnerPanoramaView;
 
 /**
- * @author: zhuyongging
+ * @author: Rookie
  * @since: 2018-11-25
  */
 public abstract class ScreenView extends InnerPanoramaView implements SurfaceHolder.Callback, Runnable {

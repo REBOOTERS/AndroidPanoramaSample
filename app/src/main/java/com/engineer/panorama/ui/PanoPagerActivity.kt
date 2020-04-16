@@ -34,6 +34,7 @@ class PanoPagerActivity : AppCompatActivity() {
 //        val adapter = MyAdapter(list)
         val adapter = MyFragmentAdapter(list, this)
         view_pager.offscreenPageLimit = ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT
+        view_pager.orientation = ViewPager2.ORIENTATION_VERTICAL
         view_pager.adapter = adapter
     }
 
