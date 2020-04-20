@@ -48,7 +48,8 @@ class PanoPagerActivity : AppCompatActivity() {
         return list
     }
 
-    class MyFragmentAdapter(private var datas: List<LatLng>, activity: FragmentActivity) : FragmentStateAdapter(activity) {
+    class MyFragmentAdapter(private var datas: List<LatLng>,
+                            activity: FragmentActivity) : FragmentStateAdapter(activity) {
         override fun getItemCount(): Int {
             return datas.size
         }
@@ -134,7 +135,7 @@ class PanoPagerActivity : AppCompatActivity() {
 
             init {
 
-                pano.onResume()
+//                pano.onResume()
                 if (surfaceView is SurfaceView) {
                     Log.e("zyq", "$surfaceView")
                     surfaceView.setZOrderOnTop(true)

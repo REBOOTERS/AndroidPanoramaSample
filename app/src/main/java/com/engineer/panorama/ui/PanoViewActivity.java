@@ -254,7 +254,7 @@ public class PanoViewActivity extends AppCompatActivity {
             @Override
             public void onLoadPanoramaEnd(String json) {
 //                Log.e(LTAG, "onLoadPanoramaEnd : " + json);
-                startAuto();
+//                startAuto();
             }
 
             @Override
