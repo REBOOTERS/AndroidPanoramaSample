@@ -40,10 +40,13 @@ class PanoPagerActivity : AppCompatActivity() {
 
     private fun getDatas(): ArrayList<LatLng> {
         val list = ArrayList<LatLng>()
-        val latLng = LatLng(39.963175, 116.400244)
+        var latLng = LatLng(39.963175, 116.400244)
         list.add(latLng)
+        latLng = LatLng(39.947246, 116.390471)
         list.add(latLng)
+        latLng = LatLng(39.902095, 116.32608)
         list.add(latLng)
+        latLng = LatLng(39.871534, 116.384147)
         list.add(latLng)
         return list
     }
@@ -61,7 +64,7 @@ class PanoPagerActivity : AppCompatActivity() {
     }
 
     class CardFragment : Fragment() {
-
+        val TAG = "CardFragment"
         private lateinit var panoView: PanoramaView
 
         override fun onCreateView(
@@ -69,12 +72,14 @@ class PanoPagerActivity : AppCompatActivity() {
                 container: ViewGroup?,
                 savedInstanceState: Bundle?
         ): View? {
+            Log.d(TAG, "onCreateView() called");
             val view = inflater.inflate(R.layout.pager_pano_item, container, false)
             panoView = view.findViewById(R.id.pano)
             return view
         }
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            Log.d(TAG, "onViewCreated() called");
             super.onViewCreated(view, savedInstanceState)
             val latLng: LatLng? = arguments?.getParcelable("data")
             latLng?.apply {
@@ -83,18 +88,27 @@ class PanoPagerActivity : AppCompatActivity() {
         }
 
         override fun onResume() {
+            Log.d(TAG, "onResume() called");
             super.onResume()
             panoView.onResume()
         }
 
         override fun onPause() {
+            Log.d(TAG, "onPause() called");
             super.onPause()
             panoView.onPause()
         }
 
-        override fun onDestroy() {
-            super.onDestroy()
+        override fun onDestroyView() {
+            Log.d(TAG, "onDestroyView() called");
+            super.onDestroyView()
             panoView.destroy()
+        }
+
+        override fun onDestroy() {
+            Log.d(TAG, "onDestroy() called");
+            super.onDestroy()
+
         }
 
         companion object {
