@@ -58,36 +58,46 @@
         <ImageView
             android:id="@+id/menu"
             android:layout_width="wrap_content"
-            android:layout_marginRight="22dp"
-            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
+            android:layout_marginRight="22dp"
             android:tint="#fff"
             app:srcCompat="@drawable/ic_more_vert_black_24dp" />
 
         <ImageView
             android:id="@+id/crop"
             android:layout_width="wrap_content"
-            android:layout_marginRight="22dp"
-            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@id/menu"
+            android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
+            android:layout_marginRight="22dp"
+            android:layout_toStartOf="@id/menu"
             app:srcCompat="@drawable/ic_crop_black_24dp" />
 
         <ImageView
             android:id="@+id/list"
             android:layout_width="wrap_content"
-            android:layout_marginRight="22dp"
-            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@id/crop"
+            android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
+            android:layout_marginRight="22dp"
+            android:layout_toStartOf="@id/crop"
             android:tint="#fff"
             app:srcCompat="@drawable/ic_format_list_bulleted_black_24dp" />
     </RelativeLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.2"
+        android:background="#fff"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone" />
 
 
 </FrameLayout>

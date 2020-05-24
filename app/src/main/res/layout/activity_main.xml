@@ -41,5 +41,12 @@
         android:layout_margin="8dp"
         android:text="multi_pano" />
 
+    <Button
+        android:id="@+id/backgroud_pano"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="backgroud_pano" />
+
 
 </LinearLayout>
