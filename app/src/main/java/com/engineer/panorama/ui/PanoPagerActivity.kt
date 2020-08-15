@@ -1,13 +1,11 @@
 package com.engineer.panorama.ui
 
+import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.SurfaceView
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -19,12 +17,15 @@ import androidx.viewpager2.widget.ViewPager2
 import com.baidu.lbsapi.panoramaview.PanoramaView
 import com.baidu.mapapi.model.LatLng
 import com.engineer.panorama.R
+import com.engineer.panorama.interfaces.SimplePanoListener
 import kotlinx.android.synthetic.main.activity_pano_pager.*
 
 class PanoPagerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_pano_pager)
         setView()
     }
@@ -33,7 +34,7 @@ class PanoPagerActivity : AppCompatActivity() {
         val list = getDatas()
 //        val adapter = MyAdapter(list)
         val adapter = MyFragmentAdapter(list, this)
-        view_pager.offscreenPageLimit = ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT
+        view_pager.offscreenPageLimit = 1
         view_pager.orientation = ViewPager2.ORIENTATION_VERTICAL
         view_pager.adapter = adapter
     }
@@ -84,6 +85,15 @@ class PanoPagerActivity : AppCompatActivity() {
             val latLng: LatLng? = arguments?.getParcelable("data")
             latLng?.apply {
                 panoView.setPanorama(longitude, latitude)
+                panoView.setPanoramaViewListener(object : SimplePanoListener() {
+                    override fun onMoveStart() {
+                        try {
+                            super.onMoveStart()
+                        } catch (e: Exception) {
+                            Log.e("zyq", "error is ${e.message}")
+                        }
+                    }
+                })
             }
         }
 
