@@ -48,7 +48,7 @@
 
         <activity
             android:name="com.engineer.google.GoogleMapsActivity"
-            android:label="@string/title_activity_google_maps"></activity>
+            android:label="@string/title_activity_google_maps"/>
         <activity android:name=".ui.MultiPanoViewActivity" />
         <activity android:name=".ui.PanoPagerActivity" />
         <activity

@@ -47,4 +47,5 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation project(path: ':baidu_map_sdk')
 }
