@@ -14,5 +14,6 @@
     <string name="demo_desc_other">其他全景参数设置</string>
     <string name="demo_desc_coordinate_converter">高德, 腾讯, 谷歌坐标转换百度坐标</string>
     <string name="demo_desc_baisic_map">基础地图展示</string>
+    <string name="title_activity_google_maps">Map</string>
 
 </resources>

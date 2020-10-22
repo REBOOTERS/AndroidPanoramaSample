@@ -3,6 +3,7 @@ package com.engineer.panorama
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.engineer.google.GoogleMapsActivity
 import com.engineer.panorama.ui.*
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -30,6 +31,10 @@ class MainActivity : AppCompatActivity() {
 
         multi_pano.setOnClickListener {
             startActivity(Intent(this, MultiPanoViewActivity::class.java))
+        }
+
+        google_map.setOnClickListener {
+            startActivity(Intent(this, GoogleMapsActivity::class.java))
         }
     }
 }

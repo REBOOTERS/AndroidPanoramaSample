@@ -45,4 +45,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
 
     implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 }
