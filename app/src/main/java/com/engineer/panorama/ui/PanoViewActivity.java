@@ -78,8 +78,7 @@ public class PanoViewActivity extends AppCompatActivity {
     private boolean titleVisible = true;
     //title显示隐藏动画
     private Animation animationShow, animationHide;
-    //地图层
-    private GLSurfaceView sv;
+
 
     private MyHandler handler;
 
@@ -130,8 +129,8 @@ public class PanoViewActivity extends AppCompatActivity {
         mMapView = (MapView) findViewById(R.id.bmapView);
         mBaiduMap = mMapView.getMap();
 
-        sv = (GLSurfaceView) mMapView.getChildAt(0);
-        sv.setZOrderMediaOverlay(true);
+//        sv = (GLSurfaceView) mMapView.getChildAt(0);
+//        sv.setZOrderMediaOverlay(true);
 
         mMapView.showScaleControl(false);
         mMapView.showZoomControls(false);
@@ -187,13 +186,10 @@ public class PanoViewActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            PixelCopy.request(mSurfaceView, bitmap, new PixelCopy.OnPixelCopyFinishedListener() {
-                @Override
-                public void onPixelCopyFinished(int copyResult) {
-                    Log.e("xxx", "copyResult==" + copyResult);
-                    saveBitmap(bitmap);
+            PixelCopy.request(mSurfaceView, bitmap, copyResult -> {
+                Log.e("xxx", "copyResult==" + copyResult);
+                saveBitmap(bitmap);
 
-                }
             }, new Handler(Looper.getMainLooper()));
         }
     }
@@ -362,12 +358,10 @@ public class PanoViewActivity extends AppCompatActivity {
                         titleVisible = false;
                         mToolbbar.startAnimation(animationHide);
 //                        textTitle.setVisibility(View.GONE);
-                        sv.setVisibility(View.GONE);
                     } else {
                         titleVisible = true;
                         mToolbbar.startAnimation(animationShow);
 //                        textTitle.setVisibility(View.VISIBLE);
-                        sv.setVisibility(View.VISIBLE);
 
                     }
 
