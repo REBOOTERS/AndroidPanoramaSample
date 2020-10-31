@@ -3,7 +3,7 @@ package com.engineer.panorama.bean;
 import java.util.List;
 
 /**
- * Created by co-mall on 2016/8/31.
+ * Created by rookie on 2016/8/31.
  */
 public class PanoramaBean {
 

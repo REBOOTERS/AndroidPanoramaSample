@@ -32,7 +32,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Created by co-mall on 2016/6/21.
+ * Created by rookie on 2016/6/21.
  */
 public class MapViewActivity extends BaseFullScreenActivity {
     private Context mContext;
