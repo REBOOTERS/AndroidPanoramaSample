@@ -20,6 +20,7 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.fastjson.JSON;
+import com.engineer.StatusBarUtil;
 import com.engineer.panorama.R;
 import com.engineer.panorama.util.ScreenView;
 import com.engineer.panorama.bean.HotCityPanoBean;
@@ -56,7 +58,7 @@ import io.reactivex.functions.Consumer;
 /**
  * 全景Demo主Activity
  */
-public class PanoViewActivity extends AppCompatActivity {
+public class PanoViewActivity extends BaseFullScreenActivity {
 
     private static final String LTAG = "BaiduPanoSDKDemo";
 
@@ -102,9 +104,9 @@ public class PanoViewActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        setContentView(R.layout.panodemo_main);
+//        setContentView(R.layout.panodemo_main);
 
         if (getIntent() != null) {
             latitude = getIntent().getDoubleExtra("latitude", 0);
@@ -114,7 +116,9 @@ public class PanoViewActivity extends AppCompatActivity {
         }
 
         initView();
-
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mToolbbar.getLayoutParams();
+        params.topMargin = StatusBarUtil.INSTANCE.getStatusBarHeight(this);
+        mToolbbar.setLayoutParams(params);
         testPano();
     }
 
@@ -344,6 +348,11 @@ public class PanoViewActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public int provideLayout() {
+        return R.layout.panodemo_main;
+    }
+
 
     private class MyHandler extends Handler {
 
@@ -420,12 +429,9 @@ public class PanoViewActivity extends AppCompatActivity {
     private void requestPermission() {
         RxPermissions rxPermissions = new RxPermissions(this);
         rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe(new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean aBoolean) throws Exception {
-                        if (aBoolean) {
-                            crop1();
-                        }
+                .subscribe(aBoolean -> {
+                    if (aBoolean) {
+                        crop1();
                     }
                 });
     }

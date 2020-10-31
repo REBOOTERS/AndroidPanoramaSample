@@ -17,6 +17,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, MapViewActivity::class.java))
         }
 
+        full_screen.setOnClickListener {
+            startActivity(Intent(this, FullActivity::class.java))
+        }
+
         map_list.setOnClickListener {
             startActivity(Intent(this, ListMapViewActivity::class.java))
         }

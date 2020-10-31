@@ -4,7 +4,6 @@
     package="com.engineer.panorama"
     android:versionCode="1"
     android:versionName="1.0">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -33,7 +32,10 @@
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/Theme.MaterialComponents.NoActionBar">
-
+        <activity
+            android:theme="@style/TransparentTheme"
+            android:exported="true"
+            android:name=".ui.FullActivity"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -48,7 +50,7 @@
 
         <activity
             android:name="com.engineer.google.GoogleMapsActivity"
-            android:label="@string/title_activity_google_maps"/>
+            android:label="@string/title_activity_google_maps" />
         <activity android:name=".ui.MultiPanoViewActivity" />
         <activity android:name=".ui.PanoPagerActivity" />
         <activity
@@ -68,10 +70,10 @@
         </activity>
         <activity
             android:name=".ui.PanoViewActivity"
-            android:theme="@style/FullScreenTheme" />
+            android:theme="@style/TransparentTheme" />
         <activity android:name=".ui.ListPanoViewActivity" />
         <activity android:name=".ui.ListMapViewActivity" />
-        <activity android:name=".ui.MapViewActivity" />
+        <activity android:name=".ui.MapViewActivity" android:theme="@style/TransparentTheme"/>
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

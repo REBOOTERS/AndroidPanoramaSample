@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.baidu.lbsapi.model.BaiduPanoData;
 import com.baidu.lbsapi.panoramaview.PanoramaRequest;
 import com.baidu.mapapi.map.BaiduMap;
@@ -24,11 +22,10 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.bumptech.glide.Glide;
+import com.engineer.StatusBarUtil;
 import com.engineer.panorama.R;
-import com.engineer.panorama.ui.PanoViewActivity;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -37,7 +34,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by co-mall on 2016/6/21.
  */
-public class MapViewActivity extends AppCompatActivity {
+public class MapViewActivity extends BaseFullScreenActivity {
     private Context mContext;
 
     private MapView mMapView;
@@ -65,8 +62,9 @@ public class MapViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mapview);
+//        setContentView(R.layout.activity_mapview);
         mContext = this;
+        StatusBarUtil.INSTANCE.setStatusBarLightMode(this,true);
         mMapView = (MapView) findViewById(R.id.bmapView);
 
 
@@ -159,5 +157,10 @@ public class MapViewActivity extends AppCompatActivity {
         super.onPause();
         //在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
         mMapView.onPause();
+    }
+
+    @Override
+    public int provideLayout() {
+        return R.layout.activity_mapview;
     }
 }
