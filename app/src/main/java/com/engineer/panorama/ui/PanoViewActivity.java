@@ -1,11 +1,12 @@
 package com.engineer.panorama.ui;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,7 +17,6 @@ import android.util.Log;
 import android.view.PixelCopy;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -25,14 +25,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
-import com.engineer.StatusBarUtil;
-import com.engineer.panorama.R;
-import com.engineer.panorama.util.ScreenView;
-import com.engineer.panorama.bean.HotCityPanoBean;
-import com.engineer.panorama.bean.PanoramaBean;
 import com.baidu.lbsapi.panoramaview.PanoramaView;
 import com.baidu.lbsapi.panoramaview.PanoramaViewListener;
 import com.baidu.lbsapi.tools.CoordinateConverter;
@@ -47,13 +42,16 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.engineer.StatusBarUtil;
+import com.engineer.panorama.R;
+import com.engineer.panorama.bean.HotCityPanoBean;
+import com.engineer.panorama.bean.PanoramaBean;
+import com.engineer.panorama.util.ScreenView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import io.reactivex.functions.Consumer;
 
 /**
  * 全景Demo主Activity
@@ -172,6 +170,45 @@ public class PanoViewActivity extends BaseFullScreenActivity {
             startActivity(new Intent(this, ListMapViewActivity.class));
             finish();
         });
+
+        FrameLayout cover = findViewById(R.id.black_cover);
+        FrameLayout layoutContent = findViewById(R.id.content_layout);
+        RecyclerView recyclerView = findViewById(R.id.bottom_list);
+        findViewById(R.id.scale).setOnClickListener(v -> {
+            Toast.makeText(PanoViewActivity.this,
+                    "scale", Toast.LENGTH_SHORT).show();
+            recyclerView.animate().translationY(0).start();
+            layoutContent.animate().scaleX(0.8f).start();
+            layoutContent.animate().scaleY(0.8f).start();
+            cover.animate().alpha(1f).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    cover.setVisibility(View.VISIBLE);
+
+                }
+            }).start();
+
+
+        });
+
+        cover.setOnClickListener(v -> {
+            Toast.makeText(PanoViewActivity.this,
+                    "cover", Toast.LENGTH_SHORT).show();
+            recyclerView.animate().translationY(1000).start();
+            layoutContent.animate().scaleX(1f).start();
+            layoutContent.animate().scaleY(1f).start();
+            cover.setVisibility(View.GONE);
+//                        cover.animate().alpha(0f).setListener(new AnimatorListenerAdapter() {
+//                            @Override
+//                            public void onAnimationEnd(Animator animation) {
+//                                super.onAnimationEnd(animation);
+//
+//                                cover.setOnClickListener(null);
+//                            }
+//                        }).start();
+        });
+
 
         if (mPanoView != null && mPanoView.getChildCount() > 0) {
             if (mPanoView.getChildAt(0) instanceof SurfaceView) {
