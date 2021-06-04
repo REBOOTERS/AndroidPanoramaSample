@@ -278,9 +278,9 @@ public class PanoViewActivity extends BaseFullScreenActivity {
         mPanoView.setShowTopoLink(true);
 
 
-        mPanoView.setPanorama(longitude, latitude);
 
-        // 测试回调函数,需要注意的是回调函数要在setPanorama()之前调用，否则回调函数可能执行异常
+
+//         测试回调函数,需要注意的是回调函数要在setPanorama()之前调用，否则回调函数可能执行异常
         mPanoView.setPanoramaViewListener(new PanoramaViewListener() {
 
             @Override
@@ -363,7 +363,7 @@ public class PanoViewActivity extends BaseFullScreenActivity {
 
             }
         });
-
+        mPanoView.setPanorama(longitude, latitude);
 
     }
 
