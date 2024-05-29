@@ -1,6 +1,5 @@
 package com.engineer.panorama.ui
 
-import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Bundle
@@ -8,7 +7,6 @@ import android.util.Log
 import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +16,6 @@ import com.baidu.lbsapi.panoramaview.PanoramaView
 import com.baidu.mapapi.model.LatLng
 import com.engineer.panorama.R
 import com.engineer.panorama.interfaces.SimplePanoListener
-import kotlinx.android.synthetic.main.activity_pano_pager.*
 
 class PanoPagerActivity : AppCompatActivity() {
 
@@ -33,6 +30,8 @@ class PanoPagerActivity : AppCompatActivity() {
     private fun setView() {
         val list = getDatas()
 //        val adapter = MyAdapter(list)
+        val view_pager = findViewById<ViewPager2>(R.id.view_pager)
+
         val adapter = MyFragmentAdapter(list, this)
         view_pager.offscreenPageLimit = 1
         view_pager.orientation = ViewPager2.ORIENTATION_VERTICAL

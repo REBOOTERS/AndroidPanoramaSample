@@ -2,6 +2,7 @@ package com.engineer.panorama;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.baidu.lbsapi.BMapManager;
@@ -9,7 +10,7 @@ import com.baidu.lbsapi.MKGeneralListener;
 import com.baidu.mapapi.SDKInitializer;
 
 public class PanoDemoApplication extends Application {
-
+    private static final String TAG = "PanoDemoApplication";
     private static PanoDemoApplication mInstance = null;
     public BMapManager mBMapManager = null;
 
@@ -41,6 +42,7 @@ public class PanoDemoApplication extends Application {
 
         @Override
         public void onGetPermissionState(int iError) {
+            Log.d(TAG, "onGetPermissionState() called with: iError = [" + iError + "]");
             // 非零值表示key验证未通过
             if (iError != 0) {
                 // 授权Key错误：

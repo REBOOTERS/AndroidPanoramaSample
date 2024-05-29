@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.baidu.lbsapi.panoramaview.PanoramaView
 import com.engineer.panorama.R
-import kotlinx.android.synthetic.main.activity_list_pano_view.*
 
 class ListPanoViewActivity : AppCompatActivity() {
     private var datas: ArrayList<String> = ArrayList()
@@ -20,6 +19,7 @@ class ListPanoViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_pano_view)
+        val list = findViewById<RecyclerView>(R.id.list)
         list.layoutManager = LinearLayoutManager(this)
         adapter = MyAdapter(datas)
         list.adapter = adapter

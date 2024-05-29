@@ -11,7 +11,6 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory
 import com.baidu.mapapi.map.TextureMapView
 import com.baidu.mapapi.model.LatLng
 import com.engineer.panorama.R
-import kotlinx.android.synthetic.main.activity_list_pano_view.*
 
 
 class ListMapViewActivity : AppCompatActivity() {
@@ -20,6 +19,7 @@ class ListMapViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_pano_view)
+        val list = findViewById<RecyclerView>(R.id.list)
         list.layoutManager = LinearLayoutManager(this)
         adapter = MyAdapter(datas)
         list.adapter = adapter

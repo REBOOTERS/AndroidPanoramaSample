@@ -3,9 +3,10 @@ package com.engineer.panorama
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.engineer.google.GoogleMapsActivity
 import com.engineer.panorama.ui.*
-import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,31 +14,31 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        map.setOnClickListener {
+        findViewById<View>(R.id.map).setOnClickListener {
             startActivity(Intent(this, MapViewActivity::class.java))
         }
 
-        full_screen.setOnClickListener {
+        findViewById<View>(R.id.full_screen).setOnClickListener {
             startActivity(Intent(this, FullActivity::class.java))
         }
 
-        map_list.setOnClickListener {
+        findViewById<View>(R.id.map_list).setOnClickListener {
             startActivity(Intent(this, ListMapViewActivity::class.java))
         }
 
-        pano_list.setOnClickListener {
+        findViewById<View>(R.id.pano_list).setOnClickListener {
             startActivity(Intent(this, ListPanoViewActivity::class.java))
         }
 
-        pano_pager.setOnClickListener {
+        findViewById<View>(R.id.pano_pager).setOnClickListener {
             startActivity(Intent(this, PanoPagerActivity::class.java))
         }
 
-        multi_pano.setOnClickListener {
+        findViewById<View>(R.id.multi_pano).setOnClickListener {
             startActivity(Intent(this, MultiPanoViewActivity::class.java))
         }
 
-        google_map.setOnClickListener {
+        findViewById<View>(R.id.google_map).setOnClickListener {
             startActivity(Intent(this, GoogleMapsActivity::class.java))
         }
     }
