@@ -17,14 +17,20 @@ import com.baidu.mapapi.model.LatLng
 import com.engineer.panorama.R
 import com.engineer.panorama.interfaces.SimplePanoListener
 
-class PanoPagerActivity : AppCompatActivity() {
+class PanoPagerActivity : BaseFullScreenActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        setContentView(R.layout.activity_pano_pager)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+
         setView()
+    }
+
+    override fun provideLayout(): Int {
+        return R.layout.activity_pano_pager
     }
 
     private fun setView() {
@@ -51,8 +57,10 @@ class PanoPagerActivity : AppCompatActivity() {
         return list
     }
 
-    class MyFragmentAdapter(private var datas: List<LatLng>,
-                            activity: FragmentActivity) : FragmentStateAdapter(activity) {
+    class MyFragmentAdapter(
+        private var datas: List<LatLng>,
+        activity: FragmentActivity
+    ) : FragmentStateAdapter(activity) {
         override fun getItemCount(): Int {
             return datas.size
         }
@@ -68,9 +76,9 @@ class PanoPagerActivity : AppCompatActivity() {
         private lateinit var panoView: PanoramaView
 
         override fun onCreateView(
-                inflater: LayoutInflater,
-                container: ViewGroup?,
-                savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
         ): View? {
             Log.d(TAG, "onCreateView() called");
             val view = inflater.inflate(R.layout.pager_pano_item, container, false)
@@ -143,7 +151,7 @@ class PanoPagerActivity : AppCompatActivity() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerHolder {
             val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.pager_pano_item, parent, false)
+                .inflate(R.layout.pager_pano_item, parent, false)
             return PagerHolder(view)
         }
 

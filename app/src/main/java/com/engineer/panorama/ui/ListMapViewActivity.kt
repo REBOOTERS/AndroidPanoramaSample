@@ -13,18 +13,22 @@ import com.baidu.mapapi.model.LatLng
 import com.engineer.panorama.R
 
 
-class ListMapViewActivity : AppCompatActivity() {
+class ListMapViewActivity : BaseFullScreenActivity() {
     private var datas: ArrayList<LatLng> = ArrayList()
     private lateinit var adapter: MyAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_list_pano_view)
+
         val list = findViewById<RecyclerView>(R.id.list)
         list.layoutManager = LinearLayoutManager(this)
         adapter = MyAdapter(datas)
         list.adapter = adapter
 
         refresh()
+    }
+
+    override fun provideLayout(): Int {
+        return R.layout.activity_list_pano_view
     }
 
     private fun refresh() {
